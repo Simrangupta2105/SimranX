@@ -24,9 +24,7 @@ function useReveal() {
 }
 function Reveal({ children, delay = 0 }) { const [ref, visible] = useReveal(); return <div ref={ref} className={`reveal ${visible ? "visible" : ""}`} style={{ "--delay": `${delay}s` }}>{children}</div>; }
 function Count({ target, active, duration = 1200 }) {
-  const [value, setValue] = useState(0);
-  useEffect(() => { if (!active) return; let frame; const started = performance.now(); const tick = (time) => { const progress = Math.min((time - started) / duration, 1); setValue(target * (1 - Math.pow(1 - progress, 3))); if (progress < 1) frame = requestAnimationFrame(tick); }; frame = requestAnimationFrame(tick); return () => cancelAnimationFrame(frame); }, [active, duration, target]);
-  return value;
+  return active ? target : 0;
 }
 function SectionHead({ kicker, title, description }) { return <div className="section-head"><div className="kicker">{kicker}</div><h2>{title}</h2><p>{description}</p></div>; }
 
